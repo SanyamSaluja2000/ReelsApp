@@ -1,0 +1,148 @@
+/* Container for the video and icons */
+.video_card {
+    min-height: 90vh; 
+    width: 35%;
+    border: 1px solid white;
+    scroll-snap-align: start;
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  /* Video element */
+  .video_play {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out; /* Smooth transition for visibility */
+  }
+  
+  /* Styling for the play and pause icons */
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.7); /* Transparent white */
+    transition: opacity 0.5s ease-in-out;
+    z-index: 15; /* Ensure it's above other elements */
+    cursor: pointer; /* Ensure the cursor indicates interactivity */
+    pointer-events: auto; /* Ensure it can be clicked */
+    opacity: 0; /* Start hidden */
+  }
+  
+  .play_icon::before {
+    content: "▶"; /* Play symbol */
+  }
+  
+  .pause_icon::before {
+    content: "❚❚"; /* Pause symbol */
+  }
+  
+  .icon.show {
+    opacity: 1; /* Make visible */
+  }
+  
+  /* Identity name styling */
+  .identity_name {
+    font-size: 1rem;
+    color: white;
+    position: absolute;
+    bottom: 2.5rem;
+    left: 1rem;
+    z-index: 10; /* Ensure it’s above the video but below the icons */
+  }
+  
+  /* Song name styling */
+  .song_name {
+    font-size: 0.8rem;
+    color: rgb(220, 240, 245);
+    position: absolute;
+    bottom: 1.1rem;
+    left: 1.5rem;
+    z-index: 10; /* Ensure it’s above the video but below the icons */
+  }
+  
+  /* Music icon styling */
+  #music_icon {
+    bottom: 1rem;
+    position: absolute;
+    left: 0.5rem;
+    z-index: 20; /* Ensure it’s above other content */
+  }
+  
+  /* Comment icon styling */
+  #comment_icon {
+    right: 0.8rem;
+    position: absolute;
+    bottom: 5rem;
+    font-weight: 300;
+    font-size: 35px;
+    cursor: pointer; /* Ensure the cursor indicates interactivity */
+    z-index: 20; /* Ensure it’s above other content */
+  }
+  
+  /* Like icon styling */
+  #like_icon {
+    right: 0.8rem;
+    position: absolute;
+    bottom: 8rem;
+    font-weight: 500;
+    font-size: 35px;
+    cursor: pointer; /* Ensure the cursor indicates interactivity */
+    z-index: 20; /* Ensure it’s above other content */
+  }
+  
+  /* Comment section styling */
+  .commentsection {
+    position: absolute;
+    bottom: 0; /* Align to the bottom of the video card */
+    left: 0;
+    width: 100%;
+    height: 50%; /* Take up the bottom half */
+    background-color: rgba(0, 0, 255, 0.7); /* Blue background with transparency */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 30; /* Ensure it's on top of other content */
+    transform: translateY(100%); /* Start off-screen */
+    transition: transform 0.3s ease-in-out; /* Smooth slide-in effect */
+  }
+  
+  /* Show class for sliding in */
+  .commentsection.show {
+    transform: translateY(0); /* Slide into view */
+  }
+  
+  /* Close button styling */
+  .close-button {
+    position: absolute;
+    top: 1rem; /* Distance from top */
+    right: 1rem; /* Distance from right */
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #000;
+    z-index: 31; /* Ensure it's above the comment section */
+  }
+  
+  /* Hide video controls when comment section is visible */
+  .video_card.no-interaction .video_play {
+    pointer-events: none; /* Disable interaction with the video */
+  }
+  

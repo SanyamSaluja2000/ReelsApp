@@ -1,0 +1,118 @@
+/* Reset margin and box-sizing for all elements */
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Container that wraps the header and video_container */
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    box-sizing: border-box;
+    
+}
+
+/* Header styling */
+.header {
+    height: 10vh; /* 10% of the viewport height */
+    background-color: #f5f5f5; /* Light color for the header */
+    width: 100%; /* Full width of the viewport */
+    display: flex;
+    align-items: center; /* Center content vertically */
+     /* Padding on left and right */
+    position: relative; /* Positioning context for absolute elements */
+}
+
+/* Header content styling */
+.header-content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 100%; /* Full width of header */
+
+}
+
+/* Logo image styling */
+.header-content img { 
+    padding: 0.5rem; /* Spacing around the image */
+    width: 50px; /* Fixed width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Brand name styling */
+.brand_name {
+    font-style: italic;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 2rem;
+    color: #333; /* Darker color for better contrast */
+    margin-left: 0.5rem; /* Spacing from the logo */
+    padding: 0.5rem; /* Padding for better spacing */
+}
+
+/* Logout button styling */
+.home_logout_btn {
+    position: absolute; /* Position within the header */
+    top: 0.5rem; /* Position from the top */
+    right: 1rem; /* Position from the right */
+    height: 2.5rem;
+    width: 6rem;
+    border: none;
+    border-radius: 8px;
+    background: skyblue; /* Vibrant color */
+    color: #ffffff; /* White text */
+    font-size: 0.85rem; 
+    font-weight: 600; /* Semi-bold text */
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    text-align: center;
+    line-height: 2.5rem; /* Center text vertically */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1001; /* Ensure it appears above other elements */
+}
+
+.home_logout_btn:hover {
+    background: #2eb3e0; /* Darker color on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+.home_logout_btn:focus {
+    outline: none;
+}
+
+.home_logout_btn:active {
+    background: #c0392b; /* Even darker shade on active */
+    transform: scale(0.98); /* Slightly shrink on click */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Normal shadow on active */
+}
+
+/* Profile styling */
+.profile {
+    position: absolute; /* Position within the header */
+    top: 20px; /* Position from the top */
+    right: 150px; /* Position from the right */
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    font-size: 1rem; /* Adjust font size */
+    color: black; /* Dark color for text */
+    font-weight: 600; /* Semi-bold text */ 
+    background-color: antiquewhite;
+    color: peru;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Keep above other content */
+}
+
+/* Video container styling */
+.video_container {
+    height: calc(100vh - 10vh); /* Take the remaining 90% of viewport height */
+    width: 100vw; /* Full viewport width */
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-color: black; /* Background color */
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center; /* Center items horizontally */
+    scroll-snap-type: y mandatory; /* Ensure snap scrolling */
+   
+}

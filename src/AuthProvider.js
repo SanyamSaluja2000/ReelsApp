@@ -1,29 +1,36 @@
 import { createContext, useEffect, useState } from "react";
-import { auth } from "./firebase";
-
+import { auth, firestore } from "./firebase";  // Import Firestore and Auth
+import { doc, getDoc, setDoc } from "firebase/firestore";  // Firestore methods
+import { onAuthStateChanged } from "firebase/auth";
 export const authContext = createContext();
 
-let AuthProvider = (props) => {
-  let [user, setUser] = useState(null);
-  let [loading, setLoading] = useState(true);
+const AuthProvider = (props) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let unsub = auth.onAuthStateChanged((user) => {
+    const unsub = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        let { displayName, email, uid, photoURL } = user;
+        const { displayName, email, uid, photoURL } = user;
+        const userDocRef = doc(firestore, "users", uid);  // Use Firestore
+        const documentSnapshot = await getDoc(userDocRef);
+
+        if (!documentSnapshot.exists()) {
+          await setDoc(userDocRef, { displayName });
+        }
+
         setUser({ displayName, email, uid, photoURL });
-        console.log("Hi");
       } else {
         setUser(null);
       }
       setLoading(false);
     });
 
-    // Correct placement of the return statement
+    // Clean up the subscription on unmount
     return () => {
       unsub();
     };
-  }, []); // Dependency array should be outside of the callback
+  }, []);
 
   return (
     <authContext.Provider value={user}>

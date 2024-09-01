@@ -58,8 +58,6 @@ const Home = () => {
     </div>
       <div className = "video_container">
         <VideoCard/>
-           
-              
       </div>
       
       </div>

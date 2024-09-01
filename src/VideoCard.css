@@ -100,49 +100,168 @@
   }
   
   /* Comment section styling */
-  .commentsection {
+.commentsection {
+  position: absolute;
+  bottom: 0; /* Align to the bottom of the video card */
+  left: 0;
+  width: 100%;
+  height: 50%; /* Take up the bottom half */
+  background-color: #fff; /* White background for the comment section */
+  color: #333; /* Darker text color for better readability */
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll ;
+  z-index: 30; /* Ensure it's on top of other content */
+  transform: translateY(100%); /* Start off-screen */
+  transition: transform 0.3s ease-in-out; /* Smooth slide-in effect */
+  border-top: 2px solid #ccc; /* Optional: Light border for separation */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Soft shadow for better depth */
+}
+
+/* Show class for sliding in */
+.commentsection.show {
+  transform: translateY(0); /* Slide into view */
+}
+
+/* Close button styling */
+
+.close-button {
     position: absolute;
-    bottom: 0; /* Align to the bottom of the video card */
-    left: 0;
-    width: 100%;
-    height: 50%; /* Take up the bottom half */
-    background-color: rgba(0, 0, 255, 0.7); /* Blue background with transparency */
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    z-index: 30; /* Ensure it's on top of other content */
-    transform: translateY(100%); /* Start off-screen */
-    transition: transform 0.3s ease-in-out; /* Smooth slide-in effect */
-  }
-  
-  /* Show class for sliding in */
-  .commentsection.show {
-    transform: translateY(0); /* Slide into view */
-  }
-  
-  /* Close button styling */
-  .close-button {
-    position: absolute;
-    top: 1rem; /* Distance from top */
-    right: 1rem; /* Distance from right */
-    background: #fff;
+    top: 0.2rem;
+    right: 0.1rem;
+    background: linear-gradient(135deg, #ff6f61, #d43f3a);
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-size: 1.5rem;
-    color: #000;
-    z-index: 31; /* Ensure it's above the comment section */
-  }
-  
-  /* Hide video controls when comment section is visible */
-  .video_card.no-interaction .video_play {
-    pointer-events: none; /* Disable interaction with the video */
-  }
-  
+    font-size: 1.4rem;
+    color: #fff;
+    z-index: 31;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.comment_text {
+  margin: 0.25rem 0 0; /* Reduced space above and no space below */
+  color: #555; /* Slightly lighter color for comment text */
+  font-size: 0.65rem; /* Further reduced font size for the comment text */
+  line-height: 1.2; /* Adjust line height for better spacing */
+  word-wrap: break-word; /* Ensure long words break correctly */
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background: #ff3d2e; /* Darker shade on hover */
+  transform: scale(1.1); /* Slight scale effect on hover */
+}
+
+.close-button:focus {
+  outline: none; /* Remove default outline */
+}
+
+/* Comments container styling */
+.comments_container {
+  width: 95%;
+  height: 85%; /* Adjust as needed */
+  border-bottom: 1px solid #ddd; /* Light border at the bottom */
+  overflow-y: scroll; /* Scrollable content */
+  padding: 0.5rem; /* Padding for spacing */
+  box-sizing: border-box;
+}
+
+/* Input container styling */
+.input_container {
+  width: 100%;
+  height: 15%; /* Same height as needed */
+  display: flex;
+  align-items: center; /* Center the button vertically */
+  background: #f7f7f7; /* Light gray background for input area */
+  border-top: 1px solid #ddd; /* Light border at the top */
+  box-sizing: border-box;
+  padding: 0 0.5rem; /* Padding for spacing */
+}
+
+
+
+
+
+/* Input text styling */
+.input_text {
+  height: 100%;
+  width: 80%; /* Takes up 80% of the width of the input_container */
+  box-sizing: border-box;
+  padding: 0.5rem; /* Add some padding inside the input field */
+  border: 1px solid #ccc; /* Light border for the input field */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1rem; /* Font size */
+  outline: none; /* Remove default outline */
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.input_text:focus {
+  border-color: #007bff; /* Highlight border color on focus */
+}
+
+/* Comment post button styling */
+.comment_post_button {
+  height: 75%; /* Increased height to fit the container */
+  width: 20%; /* Occupies 20% of input_container width */
+  margin-left: 1rem; /* Space between the input field and button */
+  background: #87ceeb; /* Sky blue background */
+  color: #fff; /* White text */
+  border: none; /* Remove border */
+  border-radius: 25px; /* Rounded corners for a pill shape */
+  font-size: 1.1rem; /* Slightly larger font size */
+  font-style: italic; /* Italic text */
+  letter-spacing: 1px; /* Spacing between letters */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Text shadow for depth */
+  cursor: pointer; /* Pointer cursor on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.comment_post_button:hover {
+  background: linear-gradient(135deg, #ff6f61, #007bff); /* Gradient background on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
+  transform: scale(1.05); /* Slight scale effect on hover */
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); /* Enhanced text shadow on hover */
+}
+
+.comment_post_button:focus {
+  outline: none; /* Remove default outline */
+}
+/* Post user comments styling */
+.post_user_comments {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  padding: 0.25rem 0; /* Reduced padding around each comment */
+  border-bottom: 1px solid #eee; /* Border between comments */
+  max-width: 100%; /* Use full width of the container */
+  margin: 0; /* Remove centering margin */
+  justify-content: flex-start; /* Align children to the left */
+  box-sizing: border-box; /* Ensure padding and borders are included in the element's total width and height */
+}
+
+
+
+/* Comment content container styling */
+.comment_content {
+  display: flex;
+  flex-direction: column; /* Stack username and comment vertically */
+  flex-grow: 1; /* Take up remaining space */
+  box-sizing: border-box; /* Ensure padding and borders are included */
+}
+
+/* Username styling */
+.post_user_comments h3 {
+  margin: 0;
+  font-size: 0.9rem; /* Slightly larger font size for username */
+  color: #333; /* Dark text color */
+  font-weight: bold; /* Make the username bold */
+  line-height: 1.2; /* Adjust line height for better spacing */
+}
+

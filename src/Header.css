@@ -1,63 +1,42 @@
-.home_logout_btn {
-    position: absolute;
-    top: 0.5rem;
-    right: 1rem;
-    height: 2.5rem;
-    width: 6rem;
-    border: none;
-    border-radius: 8px;
-    background: skyblue;
-    color: #ffffff;
-    font-size: 0.85rem;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-    line-height: 2.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    z-index: 1001;
-}
-
-.home_logout_btn:hover {
-    background: #2eb3e0;
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-}
-
-.home_logout_btn:focus {
-    outline: none;
-}
-
-.home_logout_btn:active {
-    background: #c0392b;
-    transform: scale(0.98);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.profile {
-    position: absolute;
-    top: 20px;
-    right: 150px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    color: black;
-    font-weight: 600;
-    background-color: antiquewhite;
-    color: peru;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-}
-
-.video_container {
-    height: 90vh; /* Adjust height to ensure full view of video cards */
-    width: 100vw;
-    overflow-y: scroll;
-    background-color: black;
+/* Reset margins, padding, and box-sizing for all elements */
+* {
+    margin: 0;
+   }
+  
+  .header {
+    height: 10%; /* 10% of the viewport height */
+    background-color: #f5f5f5; /* Light color for a more attractive look */
+    width: 100%; /* Full width of the viewport */
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    box-sizing: border-box;
-    scroll-snap-type: y mandatory;
+    align-items: center; /* Center content vertically */
+    padding: 0 2rem; /* Add padding to the left and right */
+    position: relative; /* Ensure the header is positioned relatively */
 }
+
+  
+  /* Header content styling */
+  .header-content {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Ensure the content spans the full width */
+    max-width: 1200px; /* Optional: Limit the max width */
+    margin: 0 auto; /* Center the content horizontally */
+  }
+  
+  /* Logo image styling */
+  .header-content img { 
+    padding: 0.5rem; /* Slightly increase padding for better spacing */
+    width: 50px; /* Set a fixed width for better consistency */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  /* Brand name styling */
+  .brand_name {
+    font-style: italic;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 2rem;
+    color: #333; /* Darker color for better contrast */
+    margin-left: 0.5rem; /* Slightly adjust margin */
+    padding: 0.5rem; /* Adjust padding for better spacing */
+  }
+  

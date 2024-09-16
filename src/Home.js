@@ -3,7 +3,7 @@ import { auth, storage, firestore } from "./firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
-import VideoCard from "./Videocard.jsx";
+import Videocard from "./Videocard";
 import logo from './instagram.png';
 import "./home.css";
 import { collection, addDoc, onSnapshot } from 'firebase/firestore';
@@ -11,7 +11,7 @@ import { collection, addDoc, onSnapshot } from 'firebase/firestore';
 const Home = () => {
   const user = useAuth();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [videos, setVideos] = useState([]); // State to store video data
+  const [videos, setVideos] = useState([]);
   const navigate = useNavigate();
   let firstName = '';
   if (user) {
@@ -21,27 +21,24 @@ const Home = () => {
   useEffect(() => {
     console.log("Setting up Firestore listener");
 
-    // Reference to the 'videos' collection
     const videosCollection = collection(firestore, 'videos');
     
-    // Set up real-time listener
     const unsubscribe = onSnapshot(videosCollection, (snapshot) => {
       console.log("Snapshot received");
       const videoList = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
-      setVideos(videoList); // Update state with video data
+      setVideos(videoList);
     }, (error) => {
       console.error('Error fetching videos: ', error);
     });
 
-    // Cleanup function to unsubscribe from the real-time listener
     return () => {
       console.log('Cleaning up Firestore listener');
       unsubscribe();
     };
-  }, []); // Empty dependency array to run only once initially
+  }, []);
 
   const handleSignout = () => {
     setIsLoggingOut(true);
@@ -64,63 +61,53 @@ const Home = () => {
       const { size, type } = file;
       const fileType = type.split("/")[0];
   
-      // Validate file type and size
       if (fileType !== "video") {
         alert("Please select a video file.");
-        e.target.value = ""; // Clear the file input
+        e.target.value = "";
         return;
       }
   
-      if (size > 10000000) { // 10MB in bytes
+      if (size > 10000000) { // 10MB
         alert("File size exceeds 10MB.");
-        e.target.value = ""; // Clear the file input
+        e.target.value = "";
         return;
       }
   
-      // File is valid
       console.log("File is valid:", file);
   
-      // Create a storage reference
       const storageRef = ref(storage, `posts/${user.uid}/${Date.now()}/${file.name}`);
   
       try {
-        // Upload the file to Firebase Storage
         const snapshot = await uploadBytes(storageRef, file);
         console.log('Uploaded a file!', snapshot);
   
-        // Get the download URL
         const downloadURL = await getDownloadURL(snapshot.ref);
         console.log('File available at', downloadURL);
         alert('File uploaded successfully!');
   
-        // Define your document fields
         const videoData = {
-          name: user.displayName, // Replace with the actual display name
-          id: user.uid,      // Replace with the actual user ID
+          name: user.displayName,
+          id: user.uid,
           downloadURL: downloadURL,
           likes: [],
           comments: []
         };
-  
-        // Specify the collection name ('videos' in this case)
+
         const videosCollection = collection(firestore, 'videos');
-        
-        // Add a new document with the video URL
         await addDoc(videosCollection, videoData);
-        console.log('Document successfully written!');
-  
+        console.log('Document successfully written!');         
       } catch (error) {
         console.error('Error uploading file or adding document:', error);
         alert('Unable to upload file or save data!');
       } finally {
-        e.target.value = ""; // Clear the file input after processing
+        e.target.value = "";
       }
     }
     console.log('After uploading file');
   };
 
   if (!user) {
-    return null; // If the user is not logged in, render nothing
+    return null;
   }
 
   return (
@@ -136,9 +123,13 @@ const Home = () => {
         </div>
       </div>
       <div className="video_container">
-        <VideoCard videos={videos} /> {/* Pass the videos data as a prop */}
-        <input className="upload" type="file" onChange={handleFileChange} />
+     
+          {videos.map(video => (
+            <Videocard key={video.id} video={video} />
+          ))}
+           <input className="upload" type="file" onChange={handleFileChange} /> 
       </div>
+      
     </div>
   );
 };

@@ -14,7 +14,7 @@ let App = ()=> {
 //     const insertDataIntoCollection = async () => {
 //       try {
 //         const docRef = await addDoc(collection(db, "myCollection"), {
-//           x: 33,
+//           x: 33, 
 //           y: 44
 //         });
 //         console.log("Document written with ID: ", docRef.id);
@@ -57,7 +57,6 @@ let App = ()=> {
     <>
     <AuthProvider>
       <Router>
-     
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />

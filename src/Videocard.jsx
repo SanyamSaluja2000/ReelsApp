@@ -1,9 +1,9 @@
+// Videocard.js
 import React, { useState } from "react";
 import "./VideoCard.css";
-import vid from "./SampleVideo.mp4";
-import CommentText from "./commenttext";
 
-const VideoCard = () => {
+// Assuming that `video` is an object with the necessary data
+const Videocard = ({ video }) => {
   const [playingState, setPlayingState] = useState(true);
   const [isCommentScreenOn, setIsCommentScreenOn] = useState(false);
   const [showIcon, setShowIcon] = useState(false);
@@ -14,7 +14,7 @@ const VideoCard = () => {
     if (!isCommentScreenOn) {
       setShowIcon(false);
     }
-    setIsCommentScreenOn(prevState => !prevState);
+    setIsCommentScreenOn((prevState) => !prevState);
   };
 
   const handleVideoClick = (e) => {
@@ -38,87 +38,62 @@ const VideoCard = () => {
   };
 
   const toggleCommentExpansion = () => {
-    setIsCommentExpanded(prevState => !prevState);
+    setIsCommentExpanded((prevState) => !prevState);
   };
 
-  const commentText = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo maiores soluta earum suscipit quas aliquam rerum vel, dolorum officiis alias placeat quam doloremque expedita quod corporis, minima odit in quaerat. 
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo maiores soluta earum suscipit quas aliquam rerum vel, dolorum officiis alias placeat quam doloremque expedita quod corporis, minima odit in quaerat 
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo maiores soluta earum suscipit quas aliquam rerum vel, dolorum officiis alias placeat quam doloremque expedita quod corporis, minima odit in quaerat 
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo maiores soluta earum suscipit quas aliquam rerum vel, dolorum officiis alias placeat quam doloremque expedita quod corporis, minima odit in quaerat
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo maiores soluta earum suscipit quas aliquam rerum vel, dolorum officiis alias placeat quam doloremque expedita quod corporis, minima odit in quaerat 
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo maiores soluta earum suscipit quas aliquam rerum vel, dolorum officiis alias placeat quam doloremque expedita quod corporis, minima odit in quaerat`;
-
-  const words = commentText.split(' ');
-  const isTruncated = words.length > 20;
-  const truncatedText = isTruncated
-    ? words.slice(0, 20).join(' ') + '...'
-    : commentText;
-
   return (
-    <div className={`video_card`}>
-      <p className="identity_name">Fake User</p>
-      <span>
-        <span className="material-symbols-outlined" id="music_icon">music_note</span>
-        <marquee className="song_name">Some Song</marquee>
-      </span>
-      <span
-        onClick={handleCommentSection}
-        className="material-symbols-outlined"
-        id="comment_icon"
-      >
-        chat
-      </span>
-      <span className="material-symbols-outlined" id="like_icon">favorite</span>
+    
+      <div className="video_card">
+        <p className="identity_name">{video.name || 'Fake User'}</p>
+        <span>
+          <span className="material-symbols-outlined" id="music_icon">music_note</span>
+          <marquee className="song_name">{video.song || 'Some Song'}</marquee>
+        </span>
+        <span
+          onClick={handleCommentSection}
+          className="material-symbols-outlined"
+          id="comment_icon"
+        >
+          chat
+        </span>
+        <span className="material-symbols-outlined" id="like_icon">favorite</span>
 
-      <video
-        src={vid}
-        alt="Video"
-        className="video_play"
-        onClick={handleVideoClick}
-        loop
-      ></video>
+        <video
+          src={video.downloadURL}
+          alt="Video"
+          className="video_play"
+          onClick={handleVideoClick}
+          loop
+        ></video>
 
-      {showIcon && (
-        <div className={`icon ${playingState ? "play_icon" : "pause_icon"} show`}></div>
-      )}
+        {showIcon && (
+          <div className={`icon ${playingState ? "play_icon" : "pause_icon"} show`}></div>
+        )}
 
-      {isCommentScreenOn && (
-        <div className="commentsection show">
-          <CommentText
-            isCommentExpanded={isCommentExpanded}
-            commentText={commentText}
-            truncatedText={truncatedText}
-            toggleCommentExpansion={toggleCommentExpansion}
-          />
-          <CommentText
-            isCommentExpanded={isCommentExpanded}
-            commentText={commentText}
-            truncatedText={truncatedText}
-            toggleCommentExpansion={toggleCommentExpansion}
-          />
-          <CommentText
-            isCommentExpanded={isCommentExpanded}
-            commentText={commentText}
-            truncatedText={truncatedText}
-            toggleCommentExpansion={toggleCommentExpansion}
-          />
-          <CommentText
-            isCommentExpanded={isCommentExpanded}
-            commentText={commentText}
-            truncatedText={truncatedText}
-            toggleCommentExpansion={toggleCommentExpansion}
-          />
-          <div className="input_container">  
-            <input className="input_text" />
-            <button className="comment_post_button">Post</button>
+        {isCommentScreenOn && (
+          <div className="commentsection show">
+            {video.comments && video.comments.length > 0 ? (
+              video.comments.map((comment, index) => (
+                <div key={index} className="comment">
+                  <p className="comment_user">{comment.username}</p>
+                  <p className="comment_text">{comment.commentText}</p>
+                </div>
+              ))
+            ) : (
+              <p>No comments yet.</p>
+            )}
+            <div className="input_container">
+              <input className="input_text" placeholder="Add a comment..." />
+              <button className="comment_post_button">Post</button>
+            </div>
+            <button className="close-button" onClick={handleCloseCommentSection}>
+              &times; {/* Cross symbol */}
+            </button>
           </div>
-          <button className="close-button" onClick={handleCloseCommentSection}>
-            &times; {/* Cross symbol */}
-          </button>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+   
   );
 };
 
-export default VideoCard;
+export default Videocard;

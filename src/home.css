@@ -7,13 +7,14 @@
 html, body {
   height: 100%;
   margin: 0;
+  overflow: hidden;
 }
 
+/* Container for the whole page */
 .container {
   height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  width: 100%; 
+  display: block;
 }
 
 /* Header styling */
@@ -23,7 +24,9 @@ html, body {
   width: 100%;
   display: flex;
   align-items: center;
-  position: relative;
+  position: fixed; /* Fixed position for sticky header */
+  top: 0;
+  left: 0;
 }
 
 /* Header content styling */
@@ -32,6 +35,7 @@ html, body {
   display: flex;
   align-items: center;
   width: 100%;
+  padding: 0 1rem; /* Add padding for spacing */
 }
 
 /* Logo image styling */
@@ -69,7 +73,7 @@ html, body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  z-index: 1001;
+  z-index: 1001; /* Ensure it's above other content */
 }
 
 .home_logout_btn:hover {
@@ -100,22 +104,27 @@ html, body {
   background-color: antiquewhite;
   color: peru;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+  z-index: 1000; /* Ensure it's above other content */
 }
 
-/* Container for video card */
+/* Container for video cards */
 .video_container {
-  height: calc(100vh - 10%); /* Adjust height based on the header's height */
+   /* Take up the remaining space after the header */
+  height: 89.4vh;
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Stack videos vertically */
   align-items: center;
-  background-color: #000; 
-  overflow-y: auto;
-  
+  overflow-y:auto; 
+  background-color: black;
 
+  scroll-snap-type: y mandatory;
 }
-
+.video_card {
+  scroll-snap-align: start;
+  padding: 0;
+  margin: 0;
+}
 
 /* Upload button styling */
 .upload {

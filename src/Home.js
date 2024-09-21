@@ -19,12 +19,9 @@ const Home = () => {
   }
 
   useEffect(() => {
-    console.log("Setting up Firestore listener");
-
     const videosCollection = collection(firestore, 'videos');
     
     const unsubscribe = onSnapshot(videosCollection, (snapshot) => {
-      console.log("Snapshot received");
       const videoList = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
@@ -35,7 +32,6 @@ const Home = () => {
     });
 
     return () => {
-      console.log('Cleaning up Firestore listener');
       unsubscribe();
     };
   }, []);
@@ -44,7 +40,6 @@ const Home = () => {
     setIsLoggingOut(true);
     auth.signOut()
       .then(() => {
-        console.log("Signing out");
         navigate("/login");
       })
       .catch((error) => {
@@ -73,18 +68,13 @@ const Home = () => {
         return;
       }
   
-      console.log("File is valid:", file);
-  
       const storageRef = ref(storage, `posts/${user.uid}/${Date.now()}/${file.name}`);
   
       try {
         const snapshot = await uploadBytes(storageRef, file);
-        console.log('Uploaded a file!', snapshot);
-  
         const downloadURL = await getDownloadURL(snapshot.ref);
-        console.log('File available at', downloadURL);
         alert('File uploaded successfully!');
-  
+
         const videoData = {
           name: user.displayName,
           id: user.uid,
@@ -103,7 +93,6 @@ const Home = () => {
         e.target.value = "";
       }
     }
-    console.log('After uploading file');
   };
 
   if (!user) {
@@ -123,15 +112,14 @@ const Home = () => {
         </div>
       </div>
       <div className="video_container">
-     
-          {videos.map(video => (
-            <Videocard key={video.id} video={video} />
-          ))}
-           <input className="upload" type="file" onChange={handleFileChange} /> 
+        {videos.map(video => (
+          <Videocard key={video.id} video={video} />
+        ))}
+        <input className="upload" type="file" onChange={handleFileChange} />
       </div>
-      
     </div>
   );
 };
+
 
 export default Home;
